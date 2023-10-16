@@ -1,14 +1,14 @@
 (ns messages-api.core
-  (:require [ring.adapter.jetty :as jetty])
+  (:require [ring.adapter.jetty :as jetty]
+            [compojure.core :as comp.core]
+            [messages-api.handler.message :as handler.msg])
   (:gen-class))
 
-(defn hello-handler
-  [request]
-  (println request)
-  {:status 208
-   :headers {"Content-type" "application/json"}
-   :body "{\"message\": \"bom dia meus condecorados\"}"})
+(def my-routes
+  (comp.core/routes
+   (comp.core/GET "/message/:id" [] handler.msg/get-message)
+   (comp.core/POST "/message/:id" [] handler.msg/save-message)))
 
 (defn -main
-  [& args]
-  (jetty/run-jetty (var hello-handler) {:port 1337 :join? false}))
+  [& _]
+  (jetty/run-jetty (var my-routes) {:port 1337 :join? false}))
