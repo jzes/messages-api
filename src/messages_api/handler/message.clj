@@ -1,19 +1,15 @@
 (ns messages-api.handler.message 
-  (:require [clojure.java.io :as io]
-            [clojure.data.json :as json]))
+  (:require [clojure.data.json :as json]
+            [messages-api.storage.file :as storage.file]))
 
 (def default-headers {"Content-type" "application/json"})
 
 (defn save-message
   [{:keys [body params] :as req}]
   (println "req" req)
-  (let [saved (try
-                (with-open [wrt (io/writer (str "base/" (:id params)))]
-                  (.write wrt (slurp body)))
-                (catch Exception e
-                  (do
-                    (println "erro ao salvar:" e)
-                    false)))]
+  (let [saved (storage.file/save-message 
+               (:id params) 
+               (slurp body))]
     (println "saved" saved)
     (if (= nil saved)
       {:status 201
@@ -28,13 +24,7 @@
   (println "req" req)
   (let [message-id (:id params)
         message-not-found (str "message not found id: " message-id)
-        message (try (->> message-id
-                          (str "base/")
-                          slurp)
-                     (catch java.io.FileNotFoundException _
-                       (do
-                         (println message-not-found)
-                         false)))]
+        message (storage.file/get-message message-id)]
     (if message
       {:status 200
        :headers default-headers
