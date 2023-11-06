@@ -7,7 +7,7 @@
                  [ring "1.10.0"] ;; http server 
                  [compojure "1.7.0"] ;; roteamento
                  [org.clojure/data.json "2.4.0"] ;; json 
-                 [com.novemberain/monger "3.1.0"] ;; mongo-db
+                 [com.novemberain/monger "3.6.0"] ;; mongo-db
                  ]
   :main ^:skip-aot messages-api.core
   :target-path "target/%s"
