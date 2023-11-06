@@ -19,8 +19,8 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_ADMINUSERNAME: sadrake
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mezake
       ME_CONFIG_MONGODB_URL: mongodb://sadrake:mezake@mongodb:27017/
     networks:
       - messagesnetwork
