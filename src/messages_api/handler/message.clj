@@ -6,12 +6,10 @@
 (def default-headers {"Content-type" "application/json"})
 
 (defn ^:private save-message
-  [write-fn {:keys [body params] :as req}]
-  (println "req4" req)
+  [write-fn {:keys [body params]}]
   (let [saved (write-fn 
                (:id params) 
                (slurp body))]
-    (println "saved" saved)
     (if (= nil saved)
       {:status 201
        :headers default-headers
@@ -21,8 +19,7 @@
        :body (json/write-str {:message "error on save"})})))
 
 (defn ^:private get-message
-  [read-fn {:keys [params] :as req}]
-  (println "req4" req)
+  [read-fn {:keys [params]}]
   (let [message-id (:id params)
         message-not-found (str "message not found id: " message-id)
         message (read-fn message-id)]
