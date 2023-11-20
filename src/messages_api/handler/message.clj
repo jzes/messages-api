@@ -6,15 +6,15 @@
 (def default-headers {"Content-type" "application/json"})
 
 (defn ^:private save-message
-  [write-fn {:keys [body params]}]
-  (let [saved (write-fn 
-               (:id params) 
+  [write-fn {:keys [body]}] 
+  (let [saved (write-fn
                (slurp body))]
-    (if (= nil saved)
+    (println saved)
+    (if (not (nil? saved))
       {:status 201
        :headers default-headers
-       :body (json/write-str {:message "saved"})}
-      {:status 400
+       :body (json/write-str saved)}
+      {:status 500
        :headers default-headers
        :body (json/write-str {:message "error on save"})})))
 
@@ -26,7 +26,7 @@
     (if message
       {:status 200
        :headers default-headers
-       :body message}
+       :body  (json/write-str message)}
       {:status 404
        :headers default-headers
        :body (json/write-str {:message message-not-found
