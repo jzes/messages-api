@@ -32,8 +32,6 @@
        :body (json/write-str {:message message-not-found
                               :requested-id message-id})})))
 
-
-
 (def file->message (partial get-message storage.file/get-message))
 (def message->file (partial save-message storage.file/save-message))
 (def mongo->message (partial get-message storage.mongo/get-message))
