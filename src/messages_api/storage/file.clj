@@ -7,7 +7,7 @@
   (println "message" message)
   (let [id (str (random-uuid))]
     (try
-      (with-open [wrt (io/writer (str "base/" id))]
+      (with-open [wrt (io/writer (str "base/file/" id))]
         (.write wrt message)
         (-> message
             json/read-str
@@ -20,7 +20,7 @@
 (defn get-message
   [id]
   (try (->> id
-            (str "base/")
+            (str "base/file/")
             slurp
             json/read-str)
        (catch java.io.FileNotFoundException _ 
