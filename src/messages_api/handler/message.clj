@@ -9,7 +9,7 @@
   [write-fn {:keys [body]}] 
   (let [saved (write-fn
                (slurp body))]
-    (println saved)
+    (println "constantino" saved)
     (if (not (nil? saved))
       {:status 201
        :headers default-headers

@@ -6,8 +6,10 @@
 
 (def my-routes
   (comp.core/routes
-   (comp.core/GET "/message/:id" [] handler.msg/mongo->message)
-   (comp.core/POST "/message" [] handler.msg/message->mongo)))
+   (comp.core/GET "/mongo-api/message/:id" [] handler.msg/mongo->message)
+   (comp.core/POST "/mongo-api/message" [] handler.msg/message->mongo)
+   (comp.core/GET "/file-api/message/:id" [] handler.msg/file->message)
+   (comp.core/POST "/file-api/message" [] handler.msg/message->file)))
 
 (defn -main
   [& _]
